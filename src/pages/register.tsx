@@ -9,9 +9,7 @@ import { useRouter } from 'next/router';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '../utils/createUrqlClient';
 
-interface registerProps {}
-
-export const Register: React.FC<registerProps> = ({}) => {
+export const Register: React.FC<{}> = ({}) => {
   const router = useRouter();
   const [, register] = useRegisterMutation();
   return (
