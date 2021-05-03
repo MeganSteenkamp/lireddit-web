@@ -6,11 +6,11 @@ import {
   Link,
   Stack,
 } from '@chakra-ui/react';
-import { Formik, Form } from 'formik';
+import { Form, Formik } from 'formik';
 import { NextPage } from 'next';
+import { withUrqlClient } from 'next-urql';
 import NextLink from 'next/link';
-import { withUrqlClient, NextComponentType } from 'next-urql';
-import { useRouter } from 'next/router';
+import router from 'next/router';
 import React, { useState } from 'react';
 import { InputField } from '../../components/InputField';
 import { Wrapper } from '../../components/Wrapper';
@@ -18,8 +18,7 @@ import { useChangePasswordMutation } from '../../generated/graphql';
 import { createUrqlClient } from '../../utils/createUrqlClient';
 import { toErrorMap } from '../../utils/toErrorMap';
 
-const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
-  const router = useRouter();
+const ChangePassword: NextPage = () => {
   const [, changePassword] = useChangePasswordMutation();
   const [tokenError, setTokenError] = useState('');
   return (
@@ -29,11 +28,16 @@ const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
         onSubmit={async (values, { setErrors }) => {
           const response = await changePassword({
             newPassword: values.newPassword,
-            token,
+            token:
+              typeof router.query.token === 'string' ? router.query.token : '',
           });
           if (response.data?.changePassword.errors) {
             const errorMap = toErrorMap(response.data.changePassword.errors);
-            if ('token' in errorMap) {
+            console.log(errorMap);
+            if ('user' in errorMap) {
+              console.log('user in errorMap');
+              setTokenError(errorMap.user); // user doesn't exist
+            } else if ('token' in errorMap) {
               // handle differently as there is no token field
               setTokenError(errorMap.token); // pass in error message for token
             }
@@ -52,18 +56,19 @@ const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
               type="password"
             />
             {tokenError ? (
-              <Stack spacing={4}>
+              tokenError.includes('token') ? (
+                <Alert status="info" mt={4} borderRadius={8}>
+                  <AlertIcon />
+                  <NextLink href="/forgot-password">
+                    <Link>token has expired. <b>click here</b> to change password</Link>
+                  </NextLink>
+                </Alert>
+              ) : (
                 <Alert status="error" mt={4} borderRadius={8}>
                   <AlertIcon />
                   <AlertDescription>{tokenError}</AlertDescription>
                 </Alert>
-                <Alert status="info" borderRadius={8}>
-                  <AlertIcon />
-                  <NextLink href="/forgot-password">
-                    <Link>click here to change password</Link>
-                  </NextLink>
-                </Alert>
-              </Stack>
+              )
             ) : null}
             <Button
               mt={4}
@@ -80,13 +85,4 @@ const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
   );
 };
 
-ChangePassword.getInitialProps = ({ query }) => {
-  return {
-    token: query.token as string,
-  };
-};
-
-// syntax due to typing issues
-export default withUrqlClient(createUrqlClient)(
-  (ChangePassword as unknown) as NextComponentType
-);
+export default withUrqlClient(createUrqlClient)(ChangePassword);

@@ -1,7 +1,8 @@
 import { Box, Button, Flex, Link } from '@chakra-ui/react';
-import React from 'react';
-import NextLink from 'next/link';
 import { useLogoutMutation, useMeQuery } from '../generated/graphql';
+
+import NextLink from 'next/link';
+import React from 'react';
 import { isServer } from '../utils/isServer';
 
 interface NavBarProps {}
@@ -46,7 +47,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
   }
 
   return (
-    <Flex bg={'blue.300'} p={4}>
+    <Flex zIndex={1} position="sticky" top={0} bg={'blue.300'} p={4}>
       <Box ml={'auto'}>{body}</Box>
     </Flex>
   );
