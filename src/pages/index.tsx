@@ -13,6 +13,7 @@ import { createUrqlClient } from '../utils/createUrqlClient';
 import { usePostsQuery } from '../generated/graphql';
 import { withUrqlClient } from 'next-urql';
 import React, { useState } from 'react';
+import { ArrowForwardIcon } from '@chakra-ui/icons';
 
 const Index = () => {
   const [variables, setVariables] = useState({
@@ -32,7 +33,14 @@ const Index = () => {
       <Flex align='center'>
         <Heading>LiReddit</Heading>
         <NextLink href='/create-post'>
-          <Link ml='auto'>create post</Link>
+          <Button
+            ml='auto'
+            colorScheme='pink'
+            variant='solid'
+            rightIcon={<ArrowForwardIcon />}
+          >
+            create post
+          </Button>
         </NextLink>
       </Flex>
       <br />
