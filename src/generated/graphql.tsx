@@ -22,7 +22,7 @@ export type FieldError = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  vote: Scalars['Boolean'];
+  vote?: Maybe<Post>;
   createPost: Post;
   updatePost?: Maybe<Post>;
   deletePost: Scalars['Boolean'];
@@ -267,7 +267,10 @@ export type VoteMutationVariables = Exact<{
 
 export type VoteMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'vote'>
+  & { vote?: Maybe<(
+    { __typename?: 'Post' }
+    & Pick<Post, 'id' | 'points'>
+  )> }
 );
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
@@ -400,8 +403,11 @@ export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
 };
 export const VoteDocument = gql`
-    mutation vote($value: Int!, $postId: Int!) {
-  vote(value: $value, postId: $postId)
+    mutation Vote($value: Int!, $postId: Int!) {
+  vote(value: $value, postId: $postId) {
+    id
+    points
+  }
 }
     `;
 
