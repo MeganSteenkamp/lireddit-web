@@ -9,11 +9,7 @@ interface NavBarProps {}
 
 export const NavBar: React.FC<NavBarProps> = ({}) => {
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
-  const [{ data, fetching }] = useMeQuery({
-    // tell this query not to run on server
-    // avoids extra query when doing ssr
-    pause: isServer(),
-  });
+  const [{ data, fetching }] = useMeQuery();
   let body = null;
   if (fetching) {
     body = null;
@@ -21,10 +17,10 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
     // user is not logged in
     body = (
       <>
-        <NextLink href="/login">
+        <NextLink href='/login'>
           <Link mr={2}>login</Link>
         </NextLink>
-        <NextLink href="/register">
+        <NextLink href='/register'>
           <Link>register</Link>
         </NextLink>
       </>
@@ -38,7 +34,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
             logout();
           }}
           isLoading={logoutFetching}
-          variant="link"
+          variant='link'
         >
           logout
         </Button>
@@ -47,7 +43,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
   }
 
   return (
-    <Flex zIndex={1} position="sticky" top={0} bg={'blue.300'} p={4}>
+    <Flex zIndex={1} position='sticky' top={0} bg={'blue.300'} p={4}>
       <Box ml={'auto'}>{body}</Box>
     </Flex>
   );
