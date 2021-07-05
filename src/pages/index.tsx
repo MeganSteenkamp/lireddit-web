@@ -1,26 +1,21 @@
 import { Layout } from '../components/Layout';
 import {
-  Link,
   Stack,
   Box,
   Heading,
   Text,
   Button,
   Flex,
-  Icon,
   Spacer,
-  IconButton,
+  LinkBox,
+  LinkOverlay,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { usePostsQuery } from '../generated/graphql';
 import { withUrqlClient } from 'next-urql';
 import React, { useState } from 'react';
-import {
-  ArrowForwardIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-} from '@chakra-ui/icons';
+import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { UpdootSection } from '../components/UpdootSection';
 
 const Index = () => {
@@ -38,40 +33,28 @@ const Index = () => {
 
   return (
     <Layout>
-      <Flex align='center'>
-        <Heading>LiReddit</Heading>
-        <NextLink href='/create-post'>
-          <Button
-            ml='auto'
-            colorScheme='pink'
-            variant='solid'
-            rightIcon={<ArrowForwardIcon />}
-          >
-            create post
-          </Button>
-        </NextLink>
-      </Flex>
-      <br />
       {fetching && !data ? (
         <div>loading...</div>
       ) : (
         <Stack spacing={8}>
           {data!.posts.posts.map((p) => (
-            <Flex key={p.id} p={5} shadow='md' borderWidth='1px'>
-              <Box>
-                <Heading fontSize='xl' isTruncated>
-                  {p.title}
-                </Heading>
-                <Text fontSize='xs' as='i'>
-                  posted by {p.creator.username}
-                </Text>
-                <Text mt={4} noOfLines={3}>
-                  {p.text}
-                </Text>
-              </Box>
-              <Spacer />
-              <UpdootSection post={p} />
-            </Flex>
+            <LinkBox key={p.id} as='article'>
+              <Flex key={p.id} p={5} shadow='md' borderWidth='1px' rounded='md'>
+                <Box>
+                  <Heading fontSize='xl' isTruncated>
+                    <LinkOverlay href={`/post/${p.id}`}>{p.title}</LinkOverlay>
+                  </Heading>
+                  <Text fontSize='xs' as='i'>
+                    posted by {p.creator.username}
+                  </Text>
+                  <Text mt={4} noOfLines={3}>
+                    {p.text}
+                  </Text>
+                </Box>
+                <Spacer />
+                <UpdootSection post={p} />
+              </Flex>
+            </LinkBox>
           ))}
         </Stack>
       )}
