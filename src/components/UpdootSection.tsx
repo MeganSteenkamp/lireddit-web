@@ -25,6 +25,7 @@ export const UpdootSection: React.FC<UpdootSectionProps> = ({ post }) => {
         aria-label='updoot post'
         icon={<ChevronUpIcon />}
         mb={2}
+        rounded='md'
       />
       {post.points}
       <IconButton
@@ -38,6 +39,7 @@ export const UpdootSection: React.FC<UpdootSectionProps> = ({ post }) => {
         aria-label='downdoot post'
         icon={<ChevronDownIcon />}
         mt={2}
+        rounded='md'
       />
     </Flex>
   );

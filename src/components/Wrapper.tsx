@@ -9,12 +9,13 @@ interface WrapperProps {
 
 export const Wrapper: React.FC<WrapperProps> = ({
   children,
+  variant = 'regular',
 }) => {
   return (
     <Container
       mt={8}
       mx='auto'
-      maxW='container.md'
+      maxW={variant === 'regular' ? 'container.md' : 'container.xl'}
       w='100%'
       py={{ base: 2 }}
       px={{ base: 4 }}

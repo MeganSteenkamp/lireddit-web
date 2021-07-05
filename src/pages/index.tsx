@@ -10,13 +10,12 @@ import {
   LinkBox,
   LinkOverlay,
 } from '@chakra-ui/react';
-import NextLink from 'next/link';
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { usePostsQuery } from '../generated/graphql';
 import { withUrqlClient } from 'next-urql';
 import React, { useState } from 'react';
-import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { UpdootSection } from '../components/UpdootSection';
+import NextLink from 'next/link';
 
 const Index = () => {
   const [variables, setVariables] = useState({
@@ -42,7 +41,9 @@ const Index = () => {
               <Flex key={p.id} p={5} shadow='md' borderWidth='1px' rounded='md'>
                 <Box>
                   <Heading fontSize='xl' isTruncated>
-                    <LinkOverlay href={`/post/${p.id}`}>{p.title}</LinkOverlay>
+                    <NextLink href={`/post/${p.id}`}>
+                      <LinkOverlay>{p.title}</LinkOverlay>
+                    </NextLink>
                   </Heading>
                   <Text fontSize='xs' as='i'>
                     posted by {p.creator.username}
