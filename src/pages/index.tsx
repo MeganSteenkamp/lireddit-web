@@ -41,7 +41,7 @@ const Index = () => {
               <Flex key={p.id} p={5} shadow='md' borderWidth='1px' rounded='md'>
                 <Box>
                   <Heading fontSize='xl' isTruncated>
-                    <NextLink href={`/post/${p.id}`}>
+                    <NextLink href='/post/[id]' as={`/post/${p.id}`} passHref>
                       <LinkOverlay>{p.title}</LinkOverlay>
                     </NextLink>
                   </Heading>
