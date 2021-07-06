@@ -17,7 +17,7 @@ import { withUrqlClient } from 'next-urql';
 import React, { useState } from 'react';
 import { UpdootSection } from '../components/UpdootSection';
 import NextLink from 'next/link';
-import { DeleteIcon } from '@chakra-ui/icons';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
 const Index = () => {
   const [variables, setVariables] = useState({
@@ -42,12 +42,7 @@ const Index = () => {
           {data!.posts.posts.map((p) =>
             !p ? null : (
               <LinkBox key={p.id}>
-                <Flex
-                  p={5}
-                  shadow='md'
-                  borderWidth='1px'
-                  rounded='md'
-                >
+                <Flex p={5} shadow='md' borderWidth='1px' rounded='md'>
                   <Box mr={6}>
                     <UpdootSection post={p} />
                   </Box>
@@ -65,16 +60,27 @@ const Index = () => {
                     </Text>
                   </Box>
                   <Spacer />
-                  <Box>
+                  <Flex ml={6} flexDirection='column'>
+                    <NextLink
+                      href='/post/edit/[id]'
+                      as={`/post/edit/${p.id}`}
+                      passHref
+                    >
+                      <IconButton
+                        as={Link}
+                        aria-label='edit post'
+                        icon={<EditIcon />}
+                      ></IconButton>
+                    </NextLink>
+                    <Spacer />
                     <IconButton
-                      ml={6}
                       onClick={() => {
                         deletePost({ id: p.id });
                       }}
                       aria-label='delete post'
                       icon={<DeleteIcon />}
                     ></IconButton>
-                  </Box>
+                  </Flex>
                 </Flex>
               </LinkBox>
             )
