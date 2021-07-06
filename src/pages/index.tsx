@@ -8,14 +8,16 @@ import {
   Flex,
   Spacer,
   LinkBox,
-  LinkOverlay,
+  Link,
+  IconButton,
 } from '@chakra-ui/react';
 import { createUrqlClient } from '../utils/createUrqlClient';
-import { usePostsQuery } from '../generated/graphql';
+import { usePostsQuery, useDeletePostMutation } from '../generated/graphql';
 import { withUrqlClient } from 'next-urql';
 import React, { useState } from 'react';
 import { UpdootSection } from '../components/UpdootSection';
 import NextLink from 'next/link';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 const Index = () => {
   const [variables, setVariables] = useState({
@@ -25,6 +27,7 @@ const Index = () => {
   const [{ data, fetching }] = usePostsQuery({
     variables,
   });
+  const [, deletePost] = useDeletePostMutation();
 
   if (!fetching && !data) {
     return <div>your query failed for some reason</div>;
@@ -36,27 +39,46 @@ const Index = () => {
         <div>loading...</div>
       ) : (
         <Stack spacing={8}>
-          {data!.posts.posts.map((p) => (
-            <LinkBox key={p.id} as='article'>
-              <Flex key={p.id} p={5} shadow='md' borderWidth='1px' rounded='md'>
-                <Box>
-                  <Heading fontSize='xl' isTruncated>
-                    <NextLink href='/post/[id]' as={`/post/${p.id}`} passHref>
-                      <LinkOverlay>{p.title}</LinkOverlay>
-                    </NextLink>
-                  </Heading>
-                  <Text fontSize='xs' as='i'>
-                    posted by {p.creator.username}
-                  </Text>
-                  <Text mt={4} noOfLines={3}>
-                    {p.text}
-                  </Text>
-                </Box>
-                <Spacer />
-                <UpdootSection post={p} />
-              </Flex>
-            </LinkBox>
-          ))}
+          {data!.posts.posts.map((p) =>
+            !p ? null : (
+              <LinkBox key={p.id}>
+                <Flex
+                  p={5}
+                  shadow='md'
+                  borderWidth='1px'
+                  rounded='md'
+                >
+                  <Box mr={6}>
+                    <UpdootSection post={p} />
+                  </Box>
+                  <Box>
+                    <Heading fontSize='xl' isTruncated>
+                      <NextLink href='/post/[id]' as={`/post/${p.id}`} passHref>
+                        <Link>{p.title}</Link>
+                      </NextLink>
+                    </Heading>
+                    <Text fontSize='xs' as='i'>
+                      posted by {p.creator.username}
+                    </Text>
+                    <Text mt={4} noOfLines={3}>
+                      {p.text}
+                    </Text>
+                  </Box>
+                  <Spacer />
+                  <Box>
+                    <IconButton
+                      ml={6}
+                      onClick={() => {
+                        deletePost({ id: p.id });
+                      }}
+                      aria-label='delete post'
+                      icon={<DeleteIcon />}
+                    ></IconButton>
+                  </Box>
+                </Flex>
+              </LinkBox>
+            )
+          )}
         </Stack>
       )}
       {data && data.posts.hasMore ? (

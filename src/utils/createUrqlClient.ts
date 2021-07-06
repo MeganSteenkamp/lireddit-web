@@ -9,6 +9,7 @@ import {
 import { gql } from '@urql/core';
 import { pipe, tap } from 'wonka';
 import {
+  DeletePostMutationVariables,
   LoginMutation,
   LogoutMutation,
   MeDocument,
@@ -19,18 +20,20 @@ import {
 import { betterUpdateQuery } from './betterUpdateQuery';
 import { isServer } from './isServer';
 
-const errorExchange: Exchange = ({ forward }) => (ops$) => {
-  // global way to handle errors
-  return pipe(
-    forward(ops$),
-    tap(({ error }) => {
-      // If the OperationResult has an error send a request to sentry
-      if (error?.message.includes('not authenticated')) {
-        Router.replace('/login');
-      }
-    })
-  );
-};
+const errorExchange: Exchange =
+  ({ forward }) =>
+  (ops$) => {
+    // global way to handle errors
+    return pipe(
+      forward(ops$),
+      tap(({ error }) => {
+        // If the OperationResult has an error send a request to sentry
+        if (error?.message.includes('not authenticated')) {
+          Router.replace('/login');
+        }
+      })
+    );
+  };
 
 export const cursorPagination = (): Resolver => {
   return (_parent, fieldArgs, cache, info) => {
@@ -98,6 +101,12 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
         },
         updates: {
           Mutation: {
+            deletePost: (_result, args, cache, info) => {
+              cache.invalidate({
+                __typename: 'Post',
+                id: (args as DeletePostMutationVariables).id,
+              });
+            },
             vote: (_result, args, cache, info) => {
               let { postId, value } = args as VoteMutationVariables;
               const data = cache.readFragment(

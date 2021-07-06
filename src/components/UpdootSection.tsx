@@ -13,7 +13,7 @@ export const UpdootSection: React.FC<UpdootSectionProps> = ({ post }) => {
   >('not-loading');
   const [, vote] = useVoteMutation();
   return (
-    <Flex direction='column' alignItems='center' justifyContent='center' ml={6}>
+    <Flex direction='column' alignItems='center' justifyContent='center'>
       <IconButton
         onClick={async () => {
           setLoadingState('updoot-loading');
