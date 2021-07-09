@@ -10,9 +10,14 @@ import {
   LinkBox,
   Link,
   IconButton,
+  HStack,
 } from '@chakra-ui/react';
 import { createUrqlClient } from '../utils/createUrqlClient';
-import { usePostsQuery, useDeletePostMutation } from '../generated/graphql';
+import {
+  usePostsQuery,
+  useDeletePostMutation,
+  useMeQuery,
+} from '../generated/graphql';
 import { withUrqlClient } from 'next-urql';
 import React, { useState } from 'react';
 import { UpdootSection } from '../components/UpdootSection';
@@ -24,6 +29,7 @@ const Index = () => {
     limit: 15,
     cursor: null as null | string,
   });
+  const [{ data: meData }] = useMeQuery();
   const [{ data, fetching }] = usePostsQuery({
     variables,
   });
@@ -41,48 +47,62 @@ const Index = () => {
         <Stack spacing={8}>
           {data!.posts.posts.map((p) =>
             !p ? null : (
-              <LinkBox key={p.id}>
-                <Flex p={5} shadow='md' borderWidth='1px' rounded='md'>
-                  <Box mr={6}>
-                    <UpdootSection post={p} />
-                  </Box>
-                  <Box>
-                    <Heading fontSize='xl' isTruncated>
-                      <NextLink href='/post/[id]' as={`/post/${p.id}`} passHref>
-                        <Link>{p.title}</Link>
-                      </NextLink>
-                    </Heading>
-                    <Text fontSize='xs' as='i'>
-                      posted by {p.creator.username}
-                    </Text>
-                    <Text mt={4} noOfLines={3}>
-                      {p.text}
-                    </Text>
-                  </Box>
-                  <Spacer />
-                  <Flex ml={6} flexDirection='column'>
-                    <NextLink
-                      href='/post/edit/[id]'
-                      as={`/post/edit/${p.id}`}
-                      passHref
-                    >
-                      <IconButton
-                        as={Link}
-                        aria-label='edit post'
-                        icon={<EditIcon />}
-                      ></IconButton>
-                    </NextLink>
-                    <Spacer />
-                    <IconButton
-                      onClick={() => {
-                        deletePost({ id: p.id });
-                      }}
-                      aria-label='delete post'
-                      icon={<DeleteIcon />}
-                    ></IconButton>
-                  </Flex>
-                </Flex>
-              </LinkBox>
+              <Flex key={p.id} p={5} shadow='md' borderWidth='1px' rounded='md'>
+                <Box mr={6}>
+                  <UpdootSection post={p} />
+                </Box>
+                <Box flex={1}>
+                  <HStack direction={'row'} flex={1}>
+                    <Box>
+                      <Heading fontSize='xl' isTruncated mr={'auto'}>
+                        <NextLink
+                          href='/post/[id]'
+                          as={`/post/${p.id}`}
+                          passHref
+                        >
+                          <Link>{p.title}</Link>
+                        </NextLink>
+                      </Heading>
+                    </Box>
+                    {meData?.me?.id !== p.creator.id ? null : (
+                      <>
+                        <Spacer />
+                        <Box>
+                          <NextLink
+                            href='/post/edit/[id]'
+                            as={`/post/edit/${p.id}`}
+                            passHref
+                          >
+                            <IconButton
+                              as={Link}
+                              rounded='md'
+                              aria-label='edit post'
+                              icon={<EditIcon />}
+                              mr={2}
+                            ></IconButton>
+                          </NextLink>
+                        </Box>
+                        <Box>
+                          <IconButton
+                            rounded='md'
+                            onClick={() => {
+                              deletePost({ id: p.id });
+                            }}
+                            aria-label='delete post'
+                            icon={<DeleteIcon />}
+                          ></IconButton>
+                        </Box>
+                      </>
+                    )}
+                  </HStack>
+                  <Text fontSize='xs' as='i'>
+                    posted by {p.creator.username}
+                  </Text>
+                  <Text mt={4} noOfLines={3}>
+                    {p.text}
+                  </Text>
+                </Box>
+              </Flex>
             )
           )}
         </Stack>
@@ -97,7 +117,7 @@ const Index = () => {
               });
             }}
             isLoading={fetching} // broken :(
-            colorScheme='blackAlpha'
+            colorScheme='pink'
             m='auto'
             my={4}
           >
