@@ -24,11 +24,14 @@ const Index = () => {
     cursor: null as null | string,
   });
   const [{ data: meData }] = useMeQuery();
-  const [{ data, fetching }] = usePostsQuery({
+  const [{ data, error, fetching }] = usePostsQuery({
     variables,
   });
 
   if (!fetching && !data) {
+    if (error) {
+      return <div>{error}</div>;
+    }
     return <div>your query failed for some reason</div>;
   }
 
