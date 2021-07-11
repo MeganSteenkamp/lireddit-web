@@ -131,7 +131,9 @@ export const NavBar = () => {
               onClick={isOpen ? onClose : onOpen}
             />
             <HStack spacing={8} alignItems={'center'}>
-              <Box fontWeight={'semibold'}>LiReddit</Box>
+              <Box fontWeight={'semibold'}>
+                <NextLink href='/'>LiReddit</NextLink>
+              </Box>
               <HStack
                 as={'nav'}
                 spacing={4}

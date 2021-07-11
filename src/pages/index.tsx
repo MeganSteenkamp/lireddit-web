@@ -1,28 +1,22 @@
-import { Layout } from '../components/Layout';
 import {
-  Stack,
   Box,
-  Heading,
-  Text,
   Button,
   Flex,
-  Spacer,
-  LinkBox,
-  Link,
-  IconButton,
+  Heading,
   HStack,
+  Link,
+  Spacer,
+  Stack,
+  Text,
 } from '@chakra-ui/react';
-import { createUrqlClient } from '../utils/createUrqlClient';
-import {
-  usePostsQuery,
-  useDeletePostMutation,
-  useMeQuery,
-} from '../generated/graphql';
 import { withUrqlClient } from 'next-urql';
-import React, { useState } from 'react';
-import { UpdootSection } from '../components/UpdootSection';
 import NextLink from 'next/link';
-import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import React, { useState } from 'react';
+import { EditDeletePostButtons } from '../components/EditDeletePostButtons';
+import { Layout } from '../components/Layout';
+import { UpdootSection } from '../components/UpdootSection';
+import { useMeQuery, usePostsQuery } from '../generated/graphql';
+import { createUrqlClient } from '../utils/createUrqlClient';
 
 const Index = () => {
   const [variables, setVariables] = useState({
@@ -33,7 +27,6 @@ const Index = () => {
   const [{ data, fetching }] = usePostsQuery({
     variables,
   });
-  const [, deletePost] = useDeletePostMutation();
 
   if (!fetching && !data) {
     return <div>your query failed for some reason</div>;
@@ -67,31 +60,7 @@ const Index = () => {
                     {meData?.me?.id !== p.creator.id ? null : (
                       <>
                         <Spacer />
-                        <Box>
-                          <NextLink
-                            href='/post/edit/[id]'
-                            as={`/post/edit/${p.id}`}
-                            passHref
-                          >
-                            <IconButton
-                              as={Link}
-                              rounded='md'
-                              aria-label='edit post'
-                              icon={<EditIcon />}
-                              mr={2}
-                            ></IconButton>
-                          </NextLink>
-                        </Box>
-                        <Box>
-                          <IconButton
-                            rounded='md'
-                            onClick={() => {
-                              deletePost({ id: p.id });
-                            }}
-                            aria-label='delete post'
-                            icon={<DeleteIcon />}
-                          ></IconButton>
-                        </Box>
+                        <EditDeletePostButtons id={p.id} />
                       </>
                     )}
                   </HStack>
