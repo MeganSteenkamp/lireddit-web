@@ -20,6 +20,7 @@ import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
 import NextLink from 'next/link';
 import { useLogoutMutation, useMeQuery } from '../generated/graphql';
 import { isServer } from '../utils/isServer';
+import { useRouter } from 'next/router';
 
 const NavLink = ({ children }: { children: NavItem }) =>
   !children ? null : (
@@ -40,6 +41,7 @@ const NavLink = ({ children }: { children: NavItem }) =>
   );
 
 export const NavBar = () => {
+  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [_, logout] = useLogoutMutation();
   const [{ data, fetching }] = useMeQuery({
@@ -88,8 +90,9 @@ export const NavBar = () => {
           </MenuButton>
           <MenuList>
             <MenuItem
-              onClick={() => {
-                logout();
+              onClick={async () => {
+                await logout();
+                router.reload();
               }}
               variant='link'
             >
