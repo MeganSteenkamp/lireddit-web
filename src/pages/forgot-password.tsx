@@ -1,47 +1,46 @@
 import {
-  Button,
   Alert,
   AlertDescription,
   AlertIcon,
   AlertTitle,
+  Button,
 } from '@chakra-ui/react';
-import { Formik, Form } from 'formik';
-import { withUrqlClient } from 'next-urql';
+import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { InputField } from '../components/InputField';
 import { Wrapper } from '../components/Wrapper';
-import { createUrqlClient } from '../utils/createUrqlClient';
 import { useForgotPasswordMutation } from '../generated/graphql';
+import { withApollo } from '../utils/withApollo';
 
 const ForgotPassword: React.FC<{}> = ({}) => {
   const [complete, setComplete] = useState(false);
-  const [, forgotPassword] = useForgotPasswordMutation();
+  const [forgotPassword] = useForgotPasswordMutation();
   return (
-    <Wrapper variant="small">
+    <Wrapper variant='small'>
       <Formik
         initialValues={{ email: '' }}
         onSubmit={async (values) => {
-          await forgotPassword(values);
+          await forgotPassword({ variables: values });
           setComplete(true);
         }}
       >
         {({ isSubmitting }) =>
           complete ? (
             <Alert
-              status="success"
-              variant="subtle"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              textAlign="center"
-              height="250px"
+              status='success'
+              variant='subtle'
+              flexDirection='column'
+              alignItems='center'
+              justifyContent='center'
+              textAlign='center'
+              height='250px'
               borderRadius={12}
             >
-              <AlertIcon boxSize="40px" mr={0} />
-              <AlertTitle mt={4} mb={1} fontSize="lg">
+              <AlertIcon boxSize='40px' mr={0} />
+              <AlertTitle mt={4} mb={1} fontSize='lg'>
                 Request received
               </AlertTitle>
-              <AlertDescription maxWidth="sm">
+              <AlertDescription maxWidth='sm'>
                 Thanks for submitting your request.
                 <br />
                 If an account with that email exists, you should have received a
@@ -51,15 +50,15 @@ const ForgotPassword: React.FC<{}> = ({}) => {
           ) : (
             <Form>
               <InputField
-                name="email"
-                placeholder="email"
-                label="Email"
-                type="email"
+                name='email'
+                placeholder='email'
+                label='Email'
+                type='email'
               />
               <Button
                 mt={4}
-                type="submit"
-                colorScheme="teal"
+                type='submit'
+                colorScheme='teal'
                 isLoading={isSubmitting}
               >
                 send reset link
@@ -72,4 +71,4 @@ const ForgotPassword: React.FC<{}> = ({}) => {
   );
 };
 
-export default withUrqlClient(createUrqlClient, { ssr: false })(ForgotPassword);
+export default withApollo({ ssr: false })(ForgotPassword);

@@ -1,23 +1,22 @@
 import { Box, Button } from '@chakra-ui/react';
-import { Formik, Form } from 'formik';
-import { withUrqlClient } from 'next-urql';
+import { Form, Formik } from 'formik';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from '../../../components/InputField';
 import { Layout } from '../../../components/Layout';
-import { createUrqlClient } from '../../../utils/createUrqlClient';
-import { useGetPostFromUrl } from '../../../utils/useGetPostFromUrl';
 import { PostError } from '../../../components/PostError';
 import { useUpdatePostMutation } from '../../../generated/graphql';
 import { useGetIntId } from '../../../utils/useGetIntId';
-import { useRouter } from 'next/router';
+import { useGetPostFromUrl } from '../../../utils/useGetPostFromUrl';
+import { withApollo } from '../../../utils/withApollo';
 
 export const EditPost = ({}) => {
   const router = useRouter();
   const postId = useGetIntId();
-  const [{ data, fetching }] = useGetPostFromUrl();
-  const [, updatePost] = useUpdatePostMutation();
+  const { data, loading } = useGetPostFromUrl();
+  const [updatePost] = useUpdatePostMutation();
 
-  if (fetching) {
+  if (loading) {
     return (
       <Layout>
         <div>loading...</div>
@@ -34,12 +33,14 @@ export const EditPost = ({}) => {
       <Formik
         initialValues={{ title: data.post.title, text: data.post.text }}
         onSubmit={async (values) => {
-          const { error } = await updatePost({
-            id: postId,
-            title: values.title,
-            text: values.text,
+          const { errors } = await updatePost({
+            variables: {
+              id: postId,
+              title: values.title,
+              text: values.text,
+            },
           });
-          if (!error) {
+          if (!errors) {
             router.back();
           }
         }}
@@ -71,4 +72,4 @@ export const EditPost = ({}) => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(EditPost);
+export default withApollo({ ssr: false })(EditPost);
