@@ -45,38 +45,6 @@ const Index = () => {
         <Stack spacing={8}>
           {data!.posts.posts.map((p) =>
             !p ? null : (
-              // <Flex key={p.id} p={5} shadow='md' borderWidth='1px' rounded='md'>
-              //   <Box mr={6}>
-              //     <UpdootSection post={p} />
-              //   </Box>
-              //   <Box>
-              //     <Stack direction={'row'} flex={1}>
-              //       <Box>
-              //         <Heading fontSize='xl' isTruncated={true} mr={'auto'}>
-              //           <NextLink
-              //             href='/post/[id]'
-              //             as={`/post/${p.id}`}
-              //             passHref
-              //           >
-              //             <Link>{p.title}</Link>
-              //           </NextLink>
-              //         </Heading>
-              //         {meData?.me?.id !== p.creator.id ? null : (
-              //           <>
-              //             <Spacer />
-              //             <EditDeletePostButtons id={p.id} />
-              //           </>
-              //         )}
-              //       </Box>
-              //     </Stack>
-              //     <Text fontSize='xs' as='i'>
-              //       posted by {p.creator.username}
-              //     </Text>
-              //     <Text mt={4} noOfLines={3}>
-              //       {p.text}
-              //     </Text>
-              //   </Box>
-              // </Flex>
               <Grid
                 key={p.id}
                 p={5}
