@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from '../components/InputField';
 import { Layout } from '../components/Layout';
-import { Wrapper } from '../components/Wrapper';
 import { MeDocument, MeQuery, useLoginMutation } from '../generated/graphql';
 import { toErrorMap } from '../utils/toErrorMap';
 import { withApollo } from '../utils/withApollo';
@@ -66,7 +65,7 @@ const Login: React.FC<{}> = ({}) => {
             <Button
               mt={4}
               type='submit'
-              colorScheme='teal'
+              colorScheme='blue'
               isLoading={isSubmitting}
             >
               login

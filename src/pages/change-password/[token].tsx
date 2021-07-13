@@ -3,7 +3,7 @@ import {
   AlertDescription,
   AlertIcon,
   Button,
-  Link,
+  Link
 } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { NextPage } from 'next';
@@ -11,11 +11,11 @@ import NextLink from 'next/link';
 import router from 'next/router';
 import React, { useState } from 'react';
 import { InputField } from '../../components/InputField';
-import { Wrapper } from '../../components/Wrapper';
+import { Layout } from '../../components/Layout';
 import {
   MeDocument,
   MeQuery,
-  useChangePasswordMutation,
+  useChangePasswordMutation
 } from '../../generated/graphql';
 import { toErrorMap } from '../../utils/toErrorMap';
 import { withApollo } from '../../utils/withApollo';
@@ -24,7 +24,7 @@ const ChangePassword: NextPage = () => {
   const [changePassword] = useChangePasswordMutation();
   const [tokenError, setTokenError] = useState('');
   return (
-    <Wrapper variant='small'>
+    <Layout variant='small'>
       <Formik
         initialValues={{ newPassword: '' }}
         onSubmit={async (values, { setErrors }) => {
@@ -91,7 +91,7 @@ const ChangePassword: NextPage = () => {
             <Button
               mt={4}
               type='submit'
-              colorScheme='teal'
+              colorScheme='blue'
               isLoading={isSubmitting}
             >
               change password
@@ -99,7 +99,7 @@ const ChangePassword: NextPage = () => {
           </Form>
         )}
       </Formik>
-    </Wrapper>
+    </Layout>
   );
 };
 

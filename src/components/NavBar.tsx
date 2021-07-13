@@ -61,7 +61,6 @@ export const NavBar = () => {
         </NextLink>
         <NextLink href='/register'>
           <Button
-            display={{ base: 'none', md: 'inline-flex' }}
             fontSize={'sm'}
             fontWeight={600}
             color={'white'}
@@ -104,72 +103,64 @@ export const NavBar = () => {
   }
 
   return (
-    <>
-      <Box
-        bg={useColorModeValue('gray.100', 'gray.900')}
-        px={4}
-        color={useColorModeValue('gray.800', 'white')}
-        borderBottom={1}
-        borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
+    <Flex
+      bg={useColorModeValue('gray.100', 'gray.900')}
+      px={4}
+      color={useColorModeValue('gray.800', 'white')}
+      borderBottom={1}
+      borderStyle={'solid'}
+      borderColor={useColorModeValue('gray.200', 'gray.900')}
+    >
+      <Flex
+        minH={'60px'}
+        py={{ base: 2 }}
+        px={{ base: 4 }}
+        align={'center'}
+        flex={1}
+        m='auto'
+        maxW={800}
+        alignItems={'center'}
+        justifyContent={'space-between'}
       >
-        <Flex
-          minH={'60px'}
-          py={{ base: 2 }}
-          px={{ base: 4 }}
-          align={'center'}
-          flex={1}
-          m='auto'
-          maxW={800}
-          alignItems={'center'}
-          justifyContent={'space-between'}
-        >
-          <IconButton
-            size={'md'}
-            mr={6}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label={'Open Menu'}
-            display={{ md: 'none' }}
-            onClick={isOpen ? onClose : onOpen}
-          />
-          <HStack spacing={8} alignItems={'center'}>
-            <Box fontWeight={'semibold'}>
-              <NextLink href='/'>LiReddit</NextLink>
-            </Box>
-            {data?.me ? (
-              <HStack
-                as={'nav'}
-                spacing={4}
-                display={{ base: 'none', md: 'flex' }}
-              >
-                {NAV_ITEMS.map((navItem) => (
-                  <NavLink key={navItem.label}>{navItem}</NavLink>
-                ))}
-              </HStack>
-            ) : null}
-          </HStack>
-          <Stack
-            flex={{ base: 1, md: 0 }}
-            justify={'flex-end'}
-            direction={'row'}
-            spacing={6}
-          >
-            <ColorModeSwitcher justifySelf='flex-end' />
-            {body}
-          </Stack>
-        </Flex>
-
-        {isOpen ? (
-          <Box pb={4} display={{ md: 'none' }}>
-            <Stack as={'nav'} spacing={4}>
-              {NAV_ITEMS.map((navItem) => (
-                <NavLink key={navItem.label}>{navItem}</NavLink>
-              ))}
-            </Stack>
+        <IconButton
+          size={'md'}
+          mr={6}
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          aria-label={'Open Menu'}
+          display={{ md: 'none' }}
+          onClick={isOpen ? onClose : onOpen}
+        />
+        <HStack spacing={8} alignItems={'center'}>
+          <Box fontWeight={'semibold'}>
+            <NextLink href='/'>LiReddit</NextLink>
           </Box>
-        ) : null}
-      </Box>
-    </>
+          <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
+            {NAV_ITEMS.map((navItem) => (
+              <NavLink key={navItem.label}>{navItem}</NavLink>
+            ))}
+          </HStack>
+        </HStack>
+        <Stack
+          flex={{ base: 2, md: 0 }}
+          justify={'flex-end'}
+          direction={'row'}
+          spacing={4}
+        >
+          <ColorModeSwitcher justifySelf='flex-end' />
+          {body}
+        </Stack>
+      </Flex>
+
+      {isOpen ? (
+        <Box pb={4} display={{ md: 'none' }}>
+          <Stack as={'nav'} spacing={4}>
+            {NAV_ITEMS.map((navItem) => (
+              <NavLink key={navItem.label}>{navItem}</NavLink>
+            ))}
+          </Stack>
+        </Box>
+      ) : null}
+    </Flex>
   );
 };
 

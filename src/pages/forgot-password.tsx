@@ -3,12 +3,12 @@ import {
   AlertDescription,
   AlertIcon,
   AlertTitle,
-  Button,
+  Button
 } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { InputField } from '../components/InputField';
-import { Wrapper } from '../components/Wrapper';
+import { Layout } from '../components/Layout';
 import { useForgotPasswordMutation } from '../generated/graphql';
 import { withApollo } from '../utils/withApollo';
 
@@ -16,7 +16,7 @@ const ForgotPassword: React.FC<{}> = ({}) => {
   const [complete, setComplete] = useState(false);
   const [forgotPassword] = useForgotPasswordMutation();
   return (
-    <Wrapper variant='small'>
+    <Layout variant='small'>
       <Formik
         initialValues={{ email: '' }}
         onSubmit={async (values) => {
@@ -58,7 +58,7 @@ const ForgotPassword: React.FC<{}> = ({}) => {
               <Button
                 mt={4}
                 type='submit'
-                colorScheme='teal'
+                colorScheme='blue'
                 isLoading={isSubmitting}
               >
                 send reset link
@@ -67,7 +67,7 @@ const ForgotPassword: React.FC<{}> = ({}) => {
           )
         }
       </Formik>
-    </Wrapper>
+    </Layout>
   );
 };
 

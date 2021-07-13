@@ -43,7 +43,7 @@ const CreatePost = ({}) => {
             <Button
               mt={4}
               type='submit'
-              colorScheme='teal'
+              colorScheme='blue'
               isLoading={isSubmitting}
             >
               create post

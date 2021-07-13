@@ -15,7 +15,7 @@ export const Wrapper: React.FC<WrapperProps> = ({
     <Container
       mt={8}
       mx='auto'
-      maxW={variant === 'regular' ? 'container.md' : 'container.sm'}
+      maxW={variant === 'regular' ? '800px' : '400px'}
       w='100%'
       py={{ base: 2 }}
       px={{ base: 4 }}

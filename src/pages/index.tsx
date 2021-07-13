@@ -10,6 +10,7 @@ import {
   Spacer,
   Stack,
   Text,
+  useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
@@ -138,7 +139,7 @@ const Index = () => {
               });
             }}
             isLoading={loading} // broken :(
-            colorScheme='pink'
+            colorScheme={'cyan'}
             m='auto'
             my={4}
           >

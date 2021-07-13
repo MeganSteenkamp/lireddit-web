@@ -60,7 +60,7 @@ export const EditPost = ({}) => {
             <Button
               mt={4}
               type='submit'
-              colorScheme='teal'
+              colorScheme='blue'
               isLoading={isSubmitting}
             >
               update post
