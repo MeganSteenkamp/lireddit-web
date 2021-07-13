@@ -2,12 +2,15 @@ import {
   Box,
   Button,
   Flex,
+  Grid,
+  GridItem,
   Heading,
   HStack,
   Link,
   Spacer,
   Stack,
   Text,
+  VStack,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import React from 'react';
@@ -41,38 +44,83 @@ const Index = () => {
         <Stack spacing={8}>
           {data!.posts.posts.map((p) =>
             !p ? null : (
-              <Flex key={p.id} p={5} shadow='md' borderWidth='1px' rounded='md'>
-                <Box mr={6}>
-                  <UpdootSection post={p} />
-                </Box>
-                <Box flex={1}>
-                  <HStack direction={'row'} flex={1}>
-                    <Box>
-                      <Heading fontSize='xl' isTruncated mr={'auto'}>
-                        <NextLink
-                          href='/post/[id]'
-                          as={`/post/${p.id}`}
-                          passHref
+              // <Flex key={p.id} p={5} shadow='md' borderWidth='1px' rounded='md'>
+              //   <Box mr={6}>
+              //     <UpdootSection post={p} />
+              //   </Box>
+              //   <Box>
+              //     <Stack direction={'row'} flex={1}>
+              //       <Box>
+              //         <Heading fontSize='xl' isTruncated={true} mr={'auto'}>
+              //           <NextLink
+              //             href='/post/[id]'
+              //             as={`/post/${p.id}`}
+              //             passHref
+              //           >
+              //             <Link>{p.title}</Link>
+              //           </NextLink>
+              //         </Heading>
+              //         {meData?.me?.id !== p.creator.id ? null : (
+              //           <>
+              //             <Spacer />
+              //             <EditDeletePostButtons id={p.id} />
+              //           </>
+              //         )}
+              //       </Box>
+              //     </Stack>
+              //     <Text fontSize='xs' as='i'>
+              //       posted by {p.creator.username}
+              //     </Text>
+              //     <Text mt={4} noOfLines={3}>
+              //       {p.text}
+              //     </Text>
+              //   </Box>
+              // </Flex>
+              <Grid
+                key={p.id}
+                p={5}
+                shadow='md'
+                borderWidth='1px'
+                rounded='md'
+                templateRows='repeat(3, 1fr)'
+                templateColumns='repeat(10, 1fr)'
+                gap={0}
+              >
+                <GridItem rowSpan={3} colSpan={1}>
+                  <Flex h='100%' w='100%' mr={4}>
+                    <UpdootSection post={p} />
+                  </Flex>
+                </GridItem>
+                <GridItem colSpan={8}>
+                  <Stack spacing='0px'>
+                    <NextLink href='/post/[id]' as={`/post/${p.id}`} passHref>
+                      <Link>
+                        <Heading
+                          mt={'auto'}
+                          fontSize='xl'
+                          isTruncated
+                          mr={'auto'}
                         >
-                          <Link>{p.title}</Link>
-                        </NextLink>
-                      </Heading>
-                    </Box>
-                    {meData?.me?.id !== p.creator.id ? null : (
-                      <>
-                        <Spacer />
-                        <EditDeletePostButtons id={p.id} />
-                      </>
-                    )}
-                  </HStack>
-                  <Text fontSize='xs' as='i'>
-                    posted by {p.creator.username}
-                  </Text>
+                          {p.title}
+                        </Heading>
+                      </Link>
+                    </NextLink>
+                    <Text fontSize='xs' as='i' isTruncated>
+                      posted by {p.creator.username}
+                    </Text>
+                  </Stack>
+                </GridItem>
+                <GridItem colSpan={1}>
+                  {meData?.me?.id !== p.creator.id ? null : (
+                    <EditDeletePostButtons id={p.id} />
+                  )}
+                </GridItem>
+                <GridItem colSpan={9} rowSpan={2}>
                   <Text mt={4} noOfLines={3}>
                     {p.text}
                   </Text>
-                </Box>
-              </Flex>
+                </GridItem>
+              </Grid>
             )
           )}
         </Stack>
