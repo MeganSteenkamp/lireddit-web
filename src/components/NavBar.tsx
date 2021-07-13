@@ -1,27 +1,25 @@
-import { ReactNode } from 'react';
+import { useApolloClient } from '@apollo/client';
+import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
-  Box,
-  Flex,
   Avatar,
-  HStack,
-  Link,
-  IconButton,
+  Box,
   Button,
+  Flex,
+  HStack,
+  IconButton,
+  Link,
   Menu,
   MenuButton,
-  MenuList,
   MenuItem,
-  Heading,
-  useDisclosure,
-  useColorModeValue,
+  MenuList,
   Stack,
+  useColorModeValue,
+  useDisclosure,
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
 import NextLink from 'next/link';
+import { ColorModeSwitcher } from '../colourModeSwitcher';
 import { useLogoutMutation, useMeQuery } from '../generated/graphql';
 import { isServer } from '../utils/isServer';
-import { useRouter } from 'next/router';
-import { useApolloClient } from '@apollo/client';
 
 const NavLink = ({ children }: { children: NavItem }) =>
   !children ? null : (
@@ -42,7 +40,6 @@ const NavLink = ({ children }: { children: NavItem }) =>
   );
 
 export const NavBar = () => {
-  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [logout] = useLogoutMutation();
   const apolloClient = useApolloClient();
@@ -108,37 +105,38 @@ export const NavBar = () => {
 
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+      <Box
+        bg={useColorModeValue('gray.100', 'gray.900')}
+        px={4}
+        color={useColorModeValue('gray.800', 'white')}
+        borderBottom={1}
+        borderStyle={'solid'}
+        borderColor={useColorModeValue('gray.200', 'gray.900')}
+      >
         <Flex
-          bg={useColorModeValue('white', 'gray.900')}
-          color={useColorModeValue('gray.800', 'white')}
-          borderBottom={1}
-          borderStyle={'solid'}
-          borderColor={useColorModeValue('gray.200', 'gray.900')}
+          minH={'60px'}
+          py={{ base: 2 }}
+          px={{ base: 4 }}
+          align={'center'}
+          flex={1}
+          m='auto'
+          maxW={800}
+          alignItems={'center'}
+          justifyContent={'space-between'}
         >
-          <Flex
-            minH={'60px'}
-            py={{ base: 2 }}
-            px={{ base: 4 }}
-            align={'center'}
-            flex={1}
-            m='auto'
-            maxW={800}
-            alignItems={'center'}
-            justifyContent={'space-between'}
-          >
-            <IconButton
-              size={'md'}
-              mr={6}
-              icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-              aria-label={'Open Menu'}
-              display={{ md: 'none' }}
-              onClick={isOpen ? onClose : onOpen}
-            />
-            <HStack spacing={8} alignItems={'center'}>
-              <Box fontWeight={'semibold'}>
-                <NextLink href='/'>LiReddit</NextLink>
-              </Box>
+          <IconButton
+            size={'md'}
+            mr={6}
+            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            aria-label={'Open Menu'}
+            display={{ md: 'none' }}
+            onClick={isOpen ? onClose : onOpen}
+          />
+          <HStack spacing={8} alignItems={'center'}>
+            <Box fontWeight={'semibold'}>
+              <NextLink href='/'>LiReddit</NextLink>
+            </Box>
+            {data?.me ? (
               <HStack
                 as={'nav'}
                 spacing={4}
@@ -148,16 +146,17 @@ export const NavBar = () => {
                   <NavLink key={navItem.label}>{navItem}</NavLink>
                 ))}
               </HStack>
-            </HStack>
-            <Stack
-              flex={{ base: 1, md: 0 }}
-              justify={'flex-end'}
-              direction={'row'}
-              spacing={6}
-            >
-              {body}
-            </Stack>
-          </Flex>
+            ) : null}
+          </HStack>
+          <Stack
+            flex={{ base: 1, md: 0 }}
+            justify={'flex-end'}
+            direction={'row'}
+            spacing={6}
+          >
+            <ColorModeSwitcher justifySelf='flex-end' />
+            {body}
+          </Stack>
         </Flex>
 
         {isOpen ? (
