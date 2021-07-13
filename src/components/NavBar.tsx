@@ -103,7 +103,7 @@ export const NavBar = () => {
   }
 
   return (
-    <Flex
+    <Box
       bg={useColorModeValue('gray.100', 'gray.900')}
       px={4}
       color={useColorModeValue('gray.800', 'white')}
@@ -141,7 +141,7 @@ export const NavBar = () => {
           </HStack>
         </HStack>
         <Stack
-          flex={{ base: 2, md: 0 }}
+          flex={{ base: 1, md: 0 }}
           justify={'flex-end'}
           direction={'row'}
           spacing={4}
@@ -160,7 +160,7 @@ export const NavBar = () => {
           </Stack>
         </Box>
       ) : null}
-    </Flex>
+    </Box>
   );
 };
 
