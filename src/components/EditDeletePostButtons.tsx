@@ -1,10 +1,9 @@
-import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
-import { Box, Flex, IconButton, Link } from '@chakra-ui/react';
-import React from 'react';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { Flex, IconButton, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
+import React from 'react';
 import {
-  PostSnippetFragment,
-  useDeletePostMutation,
+  useDeletePostMutation
 } from '../generated/graphql';
 
 interface EditDeletePostButtonsProps {
