@@ -17,6 +17,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
+import router from 'next/router';
 import { ColorModeSwitcher } from '../colourModeSwitcher';
 import { useLogoutMutation, useMeQuery } from '../generated/graphql';
 import { isServer } from '../utils/isServer';
@@ -55,7 +56,13 @@ export const NavBar = () => {
     body = (
       <>
         <NextLink href='/login'>
-          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'}>
+          <Button
+            display={{ base: 'none', md: 'flex' }}
+            as={'a'}
+            fontSize={'sm'}
+            fontWeight={400}
+            variant={'link'}
+          >
             Sign In
           </Button>
         </NextLink>
@@ -90,7 +97,7 @@ export const NavBar = () => {
             <MenuItem
               onClick={async () => {
                 await logout();
-                await apolloClient.resetStore();
+                router.reload();
               }}
               variant='link'
             >
@@ -105,7 +112,6 @@ export const NavBar = () => {
   return (
     <Box
       bg={useColorModeValue('gray.100', 'gray.900')}
-      px={4}
       color={useColorModeValue('gray.800', 'white')}
       borderBottom={1}
       borderStyle={'solid'}

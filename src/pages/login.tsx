@@ -1,17 +1,9 @@
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Heading,
-  Link,
-  StackDivider,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Button, Center, Flex, Link, Text } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { Card } from '../components/Card';
 import { InputField } from '../components/InputField';
 import { Layout } from '../components/Layout';
 import { MeDocument, MeQuery, useLoginMutation } from '../generated/graphql';
@@ -23,87 +15,80 @@ const Login: React.FC<{}> = ({}) => {
   const [login] = useLoginMutation();
   return (
     <Layout variant='small'>
-      <Center
-        p={5}
-        shadow='md'
-        borderWidth='1px'
-        rounded='md'
-        alignItems={'flex-start'}
-        flexDirection={'column'}
-      >
-        <VStack
-          width='100%'
-          divider={<StackDivider borderColor='gray.200' />}
-          spacing={4}
-          align='stretch'
-        >
-          <Heading mt={4} mb={4}>
-            Login
-          </Heading>
-          <Formik
-            initialValues={{ usernameOrEmail: '', password: '' }}
-            onSubmit={async (values, { setErrors }) => {
-              const response = await login({
-                variables: values,
-                update: (cache, { data }) => {
-                  cache.writeQuery<MeQuery>({
-                    query: MeDocument,
-                    data: {
-                      __typename: 'Query',
-                      me: data?.login.user,
-                    },
-                  });
-                  cache.evict({ fieldName: 'posts:{}' });
-                },
-              });
-              if (response.data?.login.errors) {
-                setErrors(toErrorMap(response.data.login.errors));
-              } else if (response.data?.login.user) {
-                if (typeof router.query.next === 'string') {
-                  router.push(router.query.next);
-                } else {
-                  // worked
-                  router.push('/');
-                }
+      <Card title='Sign in'>
+        <Formik
+          initialValues={{ usernameOrEmail: '', password: '' }}
+          onSubmit={async (values, { setErrors }) => {
+            const response = await login({
+              variables: values,
+              update: (cache, { data }) => {
+                cache.writeQuery<MeQuery>({
+                  query: MeDocument,
+                  data: {
+                    __typename: 'Query',
+                    me: data?.login.user,
+                  },
+                });
+                cache.evict({ fieldName: 'posts:{}' });
+              },
+            });
+            if (response.data?.login.errors) {
+              setErrors(toErrorMap(response.data.login.errors));
+            } else if (response.data?.login.user) {
+              if (typeof router.query.next === 'string') {
+                router.push(router.query.next);
+              } else {
+                // worked
+                router.push('/');
               }
-            }}
-          >
-            {({ isSubmitting }) => (
-              <Form>
+            }
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <InputField
+                name='usernameOrEmail'
+                placeholder=''
+                label='Username or email address'
+              />
+              <Box mt={4}>
                 <InputField
-                  name='usernameOrEmail'
-                  placeholder='username or email'
-                  label='Username or Email'
+                  name='password'
+                  placeholder=''
+                  label='Password'
+                  type='password'
                 />
-                <Box mt={4}>
-                  <InputField
-                    name='password'
-                    placeholder='password'
-                    label='Password'
-                    type='password'
-                  />
-                </Box>
-                <Flex mt={2}>
-                  <NextLink href='/forgot-password'>
-                    <Link ml='auto'>forgot password?</Link>
-                  </NextLink>
-                </Flex>
-                <Flex mt={4}>
-                  <Button
-                    mt={4}
-                    ml='auto'
-                    type='submit'
-                    colorScheme='blue'
-                    isLoading={isSubmitting}
-                  >
-                    login
-                  </Button>
-                </Flex>
-              </Form>
-            )}
-          </Formik>
-        </VStack>
-      </Center>
+              </Box>
+              <Flex mt={2}>
+                <NextLink href='/forgot-password'>
+                  <Link ml='auto'>forgot password?</Link>
+                </NextLink>
+              </Flex>
+              <Button
+                mt={12}
+                w='100%'
+                type='submit'
+                colorScheme='cyan'
+                isLoading={isSubmitting}
+              >
+                Sign in
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </Card>
+      <Card padding={2}>
+        <Center w='100%'>
+          <Text>
+            New to LiReddit?&nbsp;
+            <NextLink href='/register'>
+              <Button as={'a'} variant={'link'}>
+                Create an account
+              </Button>
+            </NextLink>
+          </Text>
+        </Center>
+      </Card>
     </Layout>
   );
 };

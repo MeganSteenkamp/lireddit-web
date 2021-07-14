@@ -1,17 +1,12 @@
 import {
-  Box,
   Button,
   Flex,
   Grid,
   GridItem,
   Heading,
-  HStack,
   Link,
-  Spacer,
   Stack,
   Text,
-  useColorModeValue,
-  VStack,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import React from 'react';

@@ -91,7 +91,7 @@ const ChangePassword: NextPage = () => {
             <Button
               mt={4}
               type='submit'
-              colorScheme='blue'
+              colorScheme='cyan'
               isLoading={isSubmitting}
             >
               change password
