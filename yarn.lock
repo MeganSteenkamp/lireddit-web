@@ -533,6 +533,13 @@
     "@chakra-ui/transition" "1.3.2"
     "@chakra-ui/utils" "1.8.0"
 
+"@chakra-ui/alert-dialog@^1.0.0-next.3":
+  version "1.0.0-next.3"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/alert-dialog/-/alert-dialog-1.0.0-next.3.tgz#c493ca64bfe19b0edde5d0ab29286e5285725836"
+  integrity sha512-E+O2SoevxQdPmd7/JPCNTp+CDMeBjIb8rvAdLZ7FOCrxIZ286g5HwB76uww8PlbelP0moYliN8UkGDSPkbHJZg==
+  dependencies:
+    "@chakra-ui/modal" "^1.0.0-next.3"
+
 "@chakra-ui/alert@1.2.5":
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/@chakra-ui/alert/-/alert-1.2.5.tgz#d8ab0fdf75fa61625c368bd1979d2989a9fa1907"
@@ -585,6 +592,14 @@
   dependencies:
     "@chakra-ui/react-utils" "1.1.2"
     "@chakra-ui/utils" "1.8.0"
+
+"@chakra-ui/close-button@1.1.10":
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/close-button/-/close-button-1.1.10.tgz#ad4d026d70ff0ed523a3e098110983072584e7c7"
+  integrity sha512-DgjPZlqt2lixmLfnWaeqUQwGzRW3Ld1UNncjMzVUhTFxyfgSOCRLTQP4Hj4NWXilK3SuiPtxrtxAzm1sdYRfLg==
+  dependencies:
+    "@chakra-ui/icon" "1.1.10"
+    "@chakra-ui/utils" "1.8.1"
 
 "@chakra-ui/close-button@1.1.9":
   version "1.1.9"
@@ -646,6 +661,14 @@
     "@chakra-ui/utils" "1.8.0"
     react-focus-lock "2.5.0"
 
+"@chakra-ui/focus-lock@1.1.9":
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/focus-lock/-/focus-lock-1.1.9.tgz#c642804344c5eac9aec2890d3194e496a0e81a8f"
+  integrity sha512-C6nQqn5PNOiwp6Ovd9xzJ2V6P3d3ZdfykTl+Fc4YdTC47LTrJzJmv61++nhDAzYeEseojmmgXIE1DlZfGjZpZQ==
+  dependencies:
+    "@chakra-ui/utils" "1.8.1"
+    react-focus-lock "2.5.0"
+
 "@chakra-ui/form-control@1.3.7":
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/@chakra-ui/form-control/-/form-control-1.3.7.tgz#5a9c7da856f3b4b7eae39edafa2a41a0a0d1f01a"
@@ -665,6 +688,23 @@
     "@chakra-ui/utils" "1.8.0"
     compute-scroll-into-view "1.0.14"
     copy-to-clipboard "3.3.1"
+
+"@chakra-ui/hooks@1.5.4":
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/hooks/-/hooks-1.5.4.tgz#b32536f13ac88e61675ea83c0cf7d3b494903db5"
+  integrity sha512-xAFj2Feu+ZWD1oxbQQ2UHDI7zbx/zZXjlS6ogdpXZoMrGYJhbdbV0JNGx4eK1Q1AEChNLdnZQIq8An1gYKgE8g==
+  dependencies:
+    "@chakra-ui/react-utils" "1.1.2"
+    "@chakra-ui/utils" "1.8.1"
+    compute-scroll-into-view "1.0.14"
+    copy-to-clipboard "3.3.1"
+
+"@chakra-ui/icon@1.1.10":
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icon/-/icon-1.1.10.tgz#fe7bb96f3b8162d90e85e347b3e2f8203733f44a"
+  integrity sha512-AZ2dKCHKT6dI4K9NXizHsNZSwPuBP0i1BZ4ZPoXGMOfNt7bD3yKBLoZfyO+NmAubMHanVASztikSNAmy2Rvczg==
+  dependencies:
+    "@chakra-ui/utils" "1.8.1"
 
 "@chakra-ui/icon@1.1.9":
   version "1.1.9"
@@ -750,6 +790,21 @@
     aria-hidden "^1.1.1"
     react-remove-scroll "2.4.1"
 
+"@chakra-ui/modal@^1.0.0-next.3":
+  version "1.8.9"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/modal/-/modal-1.8.9.tgz#12c1c52d5c2ee7ed565272fe34111d3f0e4da09e"
+  integrity sha512-fguU4zpE/4JWKY0yHyi/PoM0QzcBokgcT3KZnZj3KGOc1C15ZkR6GvD5UBubGMWQzlKT9hCwYaLc+VeoHnN6XA==
+  dependencies:
+    "@chakra-ui/close-button" "1.1.10"
+    "@chakra-ui/focus-lock" "1.1.9"
+    "@chakra-ui/hooks" "1.5.4"
+    "@chakra-ui/portal" "1.2.7"
+    "@chakra-ui/react-utils" "1.1.2"
+    "@chakra-ui/transition" "1.3.3"
+    "@chakra-ui/utils" "1.8.1"
+    aria-hidden "^1.1.1"
+    react-remove-scroll "2.4.1"
+
 "@chakra-ui/number-input@1.2.7":
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/@chakra-ui/number-input/-/number-input-1.2.7.tgz#0f1e7e32a83354520b4b4bbfc87a42143db0e876"
@@ -799,6 +854,15 @@
     "@chakra-ui/hooks" "1.5.3"
     "@chakra-ui/react-utils" "1.1.2"
     "@chakra-ui/utils" "1.8.0"
+
+"@chakra-ui/portal@1.2.7":
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/portal/-/portal-1.2.7.tgz#1db2d14aa6baa7267b1e51162749bb046cdb9263"
+  integrity sha512-s5iFEhjZ1r5cyIH3i5R6UOW5FwmM3JDFkLw3Y7wumlYV4CscV2/UwoKIbscR93COMGP+HPvfVDUZOB1woftQRA==
+  dependencies:
+    "@chakra-ui/hooks" "1.5.4"
+    "@chakra-ui/react-utils" "1.1.2"
+    "@chakra-ui/utils" "1.8.1"
 
 "@chakra-ui/progress@1.1.10":
   version "1.1.10"
@@ -1039,10 +1103,27 @@
   dependencies:
     "@chakra-ui/utils" "1.8.0"
 
+"@chakra-ui/transition@1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/transition/-/transition-1.3.3.tgz#0315060600d160be2687231ca19062709e363d8c"
+  integrity sha512-p9ZRaHNdSGQKS3trL7jSxh47fQDDEZfgYHMx7L/mDy6vxMNsO6YhnURULePk90hvtCAp6Z4urNTM6VYaywioQQ==
+  dependencies:
+    "@chakra-ui/utils" "1.8.1"
+
 "@chakra-ui/utils@1.8.0", "@chakra-ui/utils@^1.7.0":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.8.0.tgz#f7aad8175cc5a26a1d2795dc78691bbc21fd539e"
   integrity sha512-BWIhKcXnLbOIwCTKeNcOStNwk9RyYVA9xRRFPGK6Kp3EhrxP0rDwAbu4D3o3qAc+yhIDhGmPaIj1jRXHB5DTfg==
+  dependencies:
+    "@types/lodash.mergewith" "4.6.6"
+    css-box-model "1.2.1"
+    framesync "5.3.0"
+    lodash.mergewith "4.6.2"
+
+"@chakra-ui/utils@1.8.1":
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.8.1.tgz#9778e4e8776da0ed4dc0051755d79002d2f21ec2"
+  integrity sha512-v0xL9U2ozDbHCl2kQTdJNOjUGT7ZjyFwEYuMW02ZaLkmLPj2w3G592iOsJ9Z9sBemQgoOrZGyTWqdxm6rhxJug==
   dependencies:
     "@types/lodash.mergewith" "4.6.6"
     css-box-model "1.2.1"
@@ -1747,6 +1828,22 @@
   version "15.7.3"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
+
+"@types/react-dom@^17.0.9":
+  version "17.0.9"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.9.tgz#441a981da9d7be117042e1a6fd3dac4b30f55add"
+  integrity sha512-wIvGxLfgpVDSAMH5utdL9Ngm5Owu0VsGmldro3ORLXV8CShrL8awVj06NuEXFQ5xyaYfdca7Sgbk/50Ri1GdPg==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*", "@types/react@^17.0.14":
+  version "17.0.14"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.14.tgz#f0629761ca02945c4e8fea99b8177f4c5c61fb0f"
+  integrity sha512-0WwKHUbWuQWOce61UexYuWTGuGY/8JvtUe/dtQ6lR4sZ3UiylHotJeWpf3ArP9+DSGUoLY3wbU59VyMrJps5VQ==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
 
 "@types/react@^17.0.0":
   version "17.0.13"
